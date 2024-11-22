@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import FirstPage from "./pages/FirstPage";
+import HomePage from "./pages/HomePage"
 
 export const App = () => {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="/" element={<FirstPage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </React.Fragment>
   );
