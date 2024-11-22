@@ -1,42 +1,27 @@
 import React, { useState, useEffect } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
+import menuClick from "../../assests/audio/menu-click.mp3";
 import cover_1 from "../../assests/img/Home/cover-1.png";
 import cover_2 from "../../assests/img/Home/cover-2.png";
 import cover_3 from "../../assests/img/Home/cover-1.png";
 import cover_4 from "../../assests/img/Home/cover-4.png";
-import startButton from "../../assests/img/sceneOne/StartButton.png";
-import closeButton from "../../assests/img/sceneOne/CloseButton.png";
-import menuClick from "../../assests/audio/menu-click.mp3";
+import startButton from "../../assests/img/Home/start.png";
+import closeButton from "../../assests/img/Home/quit.png";
+import CustomHeader from '../../components/CustomHeader'
 
-const FIXED_WIDTH = 1024;
-const FIXED_HEIGHT = 720;
 
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
-const fadeOut = keyframes`
-  from { opacity: 1; }
-  to { opacity: 0; }
-`;
-
-const OuterContainer = styled.div`
-  overflow: hidden;
+const PageContainer = styled.div`
+  width: 1024px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
 `;
 
-const Container = styled.div`
-  width: ${FIXED_WIDTH}px;
-  height: ${FIXED_HEIGHT}px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const GameContainer = styled.div`
+  width: 1024px;
+  height: 720px;
   position: relative;
+  overflow: hidden;
 `;
 
 const ImageContainer = styled.div`
@@ -54,64 +39,91 @@ const CoverImage = styled.img`
 
 const ButtonsContainer = styled.div`
   position: absolute;
-  inset: 0;
+  right: 50px;
+  bottom: 50px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 240px;
+  flex-direction: column;
+  gap: 50px;
 `;
 
 const Button = styled.img`
   width: 180px;
-  height: auto;
-  object-fit: cover;
-  filter: brightness(1);
-  transition: filter 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 
   &:hover {
-    filter: brightness(1.3);
-    transform: scale(1.03);
+    transform: scale(1.05);
+    filter: brightness(110%);
   }
 `;
 
+const GameTitle = styled.div`
+  position: absolute;
+  left: 20px;
+  top: 400px;
+  color: white;
+  font-size: 80px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.6);
+`;
+
+const GameAuthor = styled.div`
+  position: absolute;
+  left: 30px;
+  top: 400px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.6);
+`;
+
+
+
+const handleClickStart = () => {
+  new Audio(menuClick).play();
+  setTimeout(() => {
+    window.location.href = '/intro';
+  }, 1000); 
+};
+
 const HomePage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [start, setStart] = useState(false);
-
   const covers = [cover_1, cover_2, cover_3, cover_4];
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % covers.length);
-    }, 3000);
-
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleClickStart = () => {
-    setStart(true);
-    new Audio(menuClick).play();
-  };
-
   return (
-    <OuterContainer>
-      <Container>
+    <PageContainer>
+      <CustomHeader/>
+      <GameContainer>
         {covers.map((cover, index) => (
           <ImageContainer key={index} active={currentImageIndex === index}>
             <CoverImage src={cover} alt={`Cover ${index + 1}`} />
           </ImageContainer>
         ))}
+        <GameAuthor>BY IRISLI0224</GameAuthor>
+        <GameTitle>
+          COZMEZ
+          <br />
+          FASHION
+          <br />
+          GAME
+        </GameTitle>
 
         <ButtonsContainer>
           <Button
             src={startButton}
-            alt="StartButton"
+            alt="Start"
             onClick={handleClickStart}
           />
-          <Button src={closeButton} alt="CloseButton" />
+          <Button src={closeButton} alt="Quit" />
         </ButtonsContainer>
-      </Container>
-    </OuterContainer>
+      </GameContainer>
+    </PageContainer>
   );
 };
 
