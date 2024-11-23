@@ -162,7 +162,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "lower",
     uiImage: NYTBottom1UI,
     mainImage: NYTBottom1,
-    position: { x: 20, y: 180, zIndex: 5 },
+    position: { x: 95, y: 246, zIndex: 5 },
   },
   {
     id: "NB002",
@@ -172,7 +172,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "lower",
     uiImage: NYTBottom2UI,
     mainImage: NYTBottom2,
-    position: { x: 20, y: 180, zIndex: 5 },
+    position: { x: 30, y: 224, zIndex: 5 },
   },
   {
     id: "NB003",
@@ -182,7 +182,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "lower",
     uiImage: NYTBottom3UI,
     mainImage: NYTBottom3,
-    position: { x: 20, y: 180, zIndex: 5 },
+    position: { x: 100, y: 240, zIndex: 5 },
   },
 
   // NYT Chains
@@ -194,7 +194,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "chain1",
     uiImage: NYTChain1UI,
     mainImage: NYTChain1,
-    position: { x: 172, y: 89, zIndex: 20 },
+    position: { x: 157, y: 89, zIndex: 20 },
   },
   {
     id: "NC002",
@@ -204,7 +204,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "chain2",
     uiImage: NYTChain2UI,
     mainImage: NYTChain2,
-    position: { x: 178, y: 75, zIndex: 20 },
+    position: { x: 153, y: 86, zIndex: 20 },
   },
 
   // NYT Choker
@@ -216,7 +216,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "choker",
     uiImage: NYTChoker1UI,
     mainImage: NYTChoker1,
-    position: { x: 100, y: 130, zIndex: 19 },
+    position: { x: 170, y: 100, zIndex: 19 },
   },
 
   // NYT Hat
@@ -228,7 +228,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "hat",
     uiImage: NYTHat1UI,
     mainImage: NYTHat1,
-    position: { x: 100, y: 50, zIndex: 25 },
+    position: { x: 131, y: -15, zIndex: 25 },
   },
 
   // NYT Tops
@@ -269,7 +269,7 @@ export const NYT_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.TOPS,
     character: CHARACTERS.NYT,
     name: "Coat 1",
-    slot: "outerCoat",
+    slot: "middleCoat",
     uiImage: NYTCoat1UI,
     mainImage: NYTCoat1Top,
     baseImage: NYTCoat1Base,
@@ -281,11 +281,11 @@ export const NYT_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.TOPS,
     character: CHARACTERS.NYT,
     name: "Coat 2",
-    slot: "outerCoat",
+    slot: "middleCoat",
     uiImage: NYTCoat2UI,
     mainImage: NYTCoat2,
     baseImage: NYTCoat2Base,
-    position: { x: 27, y: 28, zIndex: 15 },
+    position: { x: 27, y: 28, zIndex: 30 },
     basePosition: { x: 27, y: 28, zIndex: -1 },
   },
   {
@@ -309,7 +309,7 @@ export const NYT_CLOTHING_ITEMS = [
     uiImage: NYTOuterCoat1UI,
     mainImage: NYTOuterCoat1Top,
     baseImage: NYTOuterCoat1Base,
-    position: { x: 0, y: 100, zIndex: 17 },
+    position: { x: 0, y: 100, zIndex: 31 },
     basePosition: { x: 0, y: 100, zIndex: -1 },
   },
 
@@ -322,7 +322,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes01UI,
     mainImage: NYTShoes01,
-    position: { x: -9, y: 578, zIndex: 2 },
+    position: { x: 95, y: 546, zIndex: 2 },
   },
   {
     id: "NS002",
@@ -332,7 +332,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes02UI,
     mainImage: NYTShoes02,
-    position: { x: -9, y: 578, zIndex: 2 },
+    position: { x: 92, y: 582, zIndex: 2 },
   },
   {
     id: "NS003",
@@ -342,7 +342,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes03UI,
     mainImage: NYTShoes03,
-    position: { x: -2, y: 551, zIndex: 2 },
+    position: { x: 86, y: 559, zIndex: 2 },
   },
 
   // NYT Socks
@@ -354,7 +354,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "socks",
     uiImage: NYTSocks1UI,
     mainImage: NYTSocks1,
-    position: { x: 100, y: 450, zIndex: 1 },
+    position: { x: 94, y: 437, zIndex: 1 },
   },
   {
     id: "NSK002",
@@ -364,7 +364,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "socks",
     uiImage: NYTSocks2UI,
     mainImage: NYTSocks2,
-    position: { x: 100, y: 450, zIndex: 1 },
+    position: { x: 95, y: 475, zIndex: 1 },
   },
 ];
 
