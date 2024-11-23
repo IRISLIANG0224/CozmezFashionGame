@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import menuClick from "../../assets/audio/menu-click.mp3";
+import menuClick from "../../assets/audio/cute-click.mp3";
 import BG from "../../assets/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
 import { CLOTHING_TYPES, CHARACTERS } from "../../constants";
@@ -10,7 +10,6 @@ import {
   clearOutfit,
   switchCharacter,
 } from "../../redux/outfitSlice";
-import { generateShareUrl } from "../../utils/shareToken";
 import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
 import CLOTHING_ITEMS from "../../constants/clothes";

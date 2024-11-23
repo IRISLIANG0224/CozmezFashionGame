@@ -3,13 +3,13 @@ import BGM from '../assets/audio/swell.mp3';
 
 const AudioContext = createContext();
 
-// Create a singleton audio instance
 let audioInstance = null;
 const getAudioInstance = () => {
   if (!audioInstance) {
     audioInstance = new Audio(BGM);
     audioInstance.loop = true;
     audioInstance.volume = 0.5;
+    audioInstance.play();  // Start playing immediately when instance is created
   }
   return audioInstance;
 };
@@ -29,14 +29,6 @@ export const AudioProvider = ({ children }) => {
   useEffect(() => {
     const audio = audioRef.current;
 
-    // Start playing immediately
-    if (isPlaying) {
-      audio.play().catch(error => {
-        console.log('Auto-play prevented:', error);
-        setIsPlaying(false);
-      });
-    }
-
     const handleVisibilityChange = () => {
       if (document.hidden) {
         audio.pause();
@@ -48,7 +40,6 @@ export const AudioProvider = ({ children }) => {
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      // Don't pause on unmount if moving to another page
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [isPlaying]);

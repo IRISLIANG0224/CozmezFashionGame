@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import menuClick from "../../assets/audio/menu-click.mp3";
+import menuClick from "../../assets/audio/cute-click.mp3";
 import cover_1 from "../../assets/img/Home/cover-1.png";
 import cover_2 from "../../assets/img/Home/cover-2.png";
 import cover_3 from "../../assets/img/Home/cover-1.png";
