@@ -14,6 +14,8 @@ import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
 import CLOTHING_ITEMS from "../../constants/clothes";
 import { useNavigate } from 'react-router-dom';
+import SpeechBubble from "../../components/Bubble";
+
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -248,6 +250,7 @@ const GamePage = () => {
           <Figure
             character={outfitState.currentCharacter}
           />
+          <SpeechBubble character={outfitState.currentCharacter} />
         </LeftPanel>
         <RightPanel>
           <CategoryBar>

@@ -13,6 +13,7 @@ import NytShock from "../../assets/img/Share/NYT/Face/Shock.png";
 import NytHappy from "../../assets/img/Share/NYT/Face/Happy.png";
 import NytSpeechLess from "../../assets/img/Share/NYT/Face/SpeechLess.png";
 
+
 const FigureContainer = styled.div`
   position: absolute;
   width: 380px;
