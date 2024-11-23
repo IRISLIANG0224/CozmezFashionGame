@@ -140,7 +140,7 @@ const ClothingGrid = ({ items = [], onSelect, selectedItemId = null }) => {
       {totalPages > 1 && (
         <Pagination>
           <PageButton onClick={handlePrevPage} disabled={currentPage === 0}>
-            ←
+          ⏴
           </PageButton>
           <PageInfo>
             Page {currentPage + 1} of {totalPages}
@@ -149,7 +149,7 @@ const ClothingGrid = ({ items = [], onSelect, selectedItemId = null }) => {
             onClick={handleNextPage}
             disabled={currentPage === totalPages - 1}
           >
-            →
+            ⏵
           </PageButton>
         </Pagination>
       )}

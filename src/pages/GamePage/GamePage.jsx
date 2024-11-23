@@ -203,37 +203,10 @@ const GamePage = () => {
   };
 
   const handleShare = () => {
-    new Audio(menuClick).play();
-
-    const outfitData = {
-      KNT: outfitState.KNT,
-      NYT: outfitState.NYT,
-    };
-
-    const shareUrl = generateShareUrl(outfitData);
-
-    if (navigator.clipboard) {
-      navigator.clipboard
-        .writeText(shareUrl)
-        .then(() => {
-          setShowToast(true);
-        })
-        .catch((err) => {
-          console.error("Failed to copy share URL:", err);
-        });
-    } else {
-      const textArea = document.createElement("textarea");
-      textArea.value = shareUrl;
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand("copy");
-        setShowToast(true);
-      } catch (err) {
-        console.error("Failed to copy share URL:", err);
-      }
-      document.body.removeChild(textArea);
-    }
+   new Audio(menuClick).play();
+   setTimeout(() => {
+     window.location.href = "/share";
+   }, 1000);
   };
 
   const handleItemSelect = (item) => {
@@ -305,7 +278,7 @@ const GamePage = () => {
                   BACK
                 </ActionButton>
                 <ActionButton confirm onClick={handleShare}>
-                  SHARE
+                  NEXT
                 </ActionButton>
               </>
             ) : (
@@ -317,21 +290,8 @@ const GamePage = () => {
         </RightPanel>
       </GameContainer>
       <GameFooter />
-      {showToast && <Toast>Share URL copied to clipboard! 🎉</Toast>}
     </PageContainer>
   );
 };
-
-// const SAMPLE_CLOTHING_ITEMS = [
-//   {
-//     id: "T001",
-//     type: CLOTHING_TYPES.TOPS,
-//     character: CHARACTERS.KNT,
-//     name: "Basic T-Shirt",
-//     uiImage: Cloth1,
-//     mainImage: "/path/to/main-image.png",
-//     position: { x: 0, y: 0, zIndex: 1 },
-//   },
-// ];
 
 export default GamePage;

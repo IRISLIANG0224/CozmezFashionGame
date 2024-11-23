@@ -4,6 +4,7 @@ import FirstPage from "./pages/FirstPage";
 import HomePage from "./pages/HomePage"
 import IntroPage from "./pages/IntroPage";
 import GamePage from "./pages/GamePage";
+import SharePage from "./pages/SharePage";
 
 export const App = () => {
   return (
@@ -12,6 +13,7 @@ export const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/game" element={<GamePage />} />
+        <Route path="/share" element={<SharePage />} />
       </Routes>
     </React.Fragment>
   );

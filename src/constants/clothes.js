@@ -526,7 +526,7 @@ export const KNT_CLOTHING_ITEMS = [
     mainImage: KNTMiddleCoat01Top,
     baseImage: KNTMiddleCoat01Base,
     position: { x: 17, y: 61, zIndex: 13 },
-    basePosition: { x: 17, y: 61, zIndex: -1 },
+    basePosition: { x: 17, y: 61, zIndex: -20 },
   },
   {
     id: "KOCT001",
