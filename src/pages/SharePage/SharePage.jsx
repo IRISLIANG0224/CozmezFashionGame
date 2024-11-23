@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Twitter, Link, Play } from "lucide-react";
 import menuClick from "../../assets/audio/menu-click.mp3";
 import CustomHeader from "../../components/CustomHeader";
 import {
@@ -25,7 +26,6 @@ import NytShock from "../../assets/img/Share/NYT/Shock.png";
 import NytHappy from "../../assets/img/Share/NYT/Happy.png";
 import NytSpeechLess from "../../assets/img/Share/NYT/SpeechLess.png";
 
-
 const CHARACTER_MOODS = {
   KNT: [
     { name: "Default", image: KntDefault },
@@ -43,15 +43,15 @@ const CHARACTER_MOODS = {
   ]
 };
 
-
 const ZOOM_LIMITS = {
   MIN: 0.8,
   MAX: 1.2,
   STEP: 0.1
 };
 
-
 const BGS = [bg_1, bg_2, bg_3, bg_4];
+
+const SHARE_TEMPLATE = "✨[COSMEZ FASHION GAME]✨\nDress up & express yourself!\nCreated by @IRISLI0224\nTry it yourself 👉 ";
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -60,7 +60,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   transform: translateX(-50%);
-  background: url(${(props) => props.background}) no-repeat center center;
+  background: url(${props => props.background}) no-repeat center center;
   background-size: cover;
   overflow: hidden;
   margin-left: 50%;
@@ -78,17 +78,17 @@ const FigureContainer = styled.div`
   width: 380px;
   height: 100%;
   top: 10px;
-  ${(props) => (props.left ? "left: 150px;" : "left: 450px;")}
+  ${props => props.left ? "left: 150px;" : "left: 450px;"}
 `;
 
 const MoodBar = styled.div`
   position: absolute;
   top: 20px;
-  ${(props) => (props.left ? "left: 20px;" : "right: 20px;")};
+  ${props => props.left ? "left: 20px;" : "right: 20px;"};
   display: flex;
   flex-direction: column;
   gap: 10px;
-  opacity: ${(props) => (props.hidden ? 0 : 1)};
+  opacity: ${props => props.hidden ? 0 : 1};
   transition: opacity 0.3s ease;
 `;
 
@@ -102,7 +102,7 @@ const MoodTitle = styled.div`
 const MoodButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-  z-index:100;
+  z-index: 100;
 `;
 
 const MoodButton = styled.button`
@@ -110,8 +110,7 @@ const MoodButton = styled.button`
   height: 40px;
   border-radius: 50%;
   border: 2px solid white;
-  background: ${(props) =>
-    props.active ? "rgb(144 106 179 / 46%)" : "rgb(7 187 189 / 39%)"};
+  background: ${props => props.active ? "rgb(144 106 179 / 46%)" : "rgb(7 187 189 / 39%)"};
   cursor: pointer;
   padding: 2px;
   overflow: hidden;
@@ -127,13 +126,13 @@ const NavigationButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  ${(props) => (props.left ? "left: 0;" : "right: 0;")}
+  ${props => props.left ? "left: 0;" : "right: 0;"}
   width: 50px;
   height: 100px;
   background: rgb(47 63 175 / 72%);
   border: none;
   cursor: pointer;
-  opacity: ${(props) => (props.hidden ? 0 : 1)};
+  opacity: ${props => props.hidden ? 0 : 1};
   transition: opacity 0.3s ease;
   margin-left: 20px;
   margin-right: 20px;
@@ -150,7 +149,7 @@ const ZoomControls = styled.div`
   transform: translateX(-50%);
   display: flex;
   gap: 300px;
-  opacity: ${(props) => (props.hidden ? 0 : 1)};
+  opacity: ${props => props.hidden ? 0 : 1};
   transition: opacity 0.3s ease;
 `;
 
@@ -173,53 +172,60 @@ const ZoomButton = styled.button`
     if (props.direction === 'out' && props.scale <= ZOOM_LIMITS.MIN) return 'none';
     return 'auto';
   }};
-  
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   transition: opacity 0.3s ease;
-  
-  &:hover {
-    opacity: ${props => {
-      if (props.direction === 'in' && props.scale >= ZOOM_LIMITS.MAX) return 0.5;
-      if (props.direction === 'out' && props.scale <= ZOOM_LIMITS.MIN) return 0.5;
-      return 0.8;
-    }};
-  }
 `;
 
 const ActionBar = styled.div`
   position: absolute;
   bottom: 10px;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  gap: 450px;
-  background-color: #ffffff70;
+  justify-content: center;
+  gap: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
   height: 70px;
   width: 100%;
+  padding: 0 32px;
 `;
 
 const ActionButton = styled.button`
-  margin-top: 10px;
-  margin-bottom: 20px;
   height: 50px;
-  padding: 10px 30px;
+  padding: 0 32px;
   background: rgb(47 63 175 / 92%);
   color: white;
   border: 2px solid white;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
   text-transform: uppercase;
-  min-width: 250px;
-  margin-left: 30px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
+const TwitterButton = styled(ActionButton)`
+  background: #1DA1F2;
+`;
+
+const CopyLinkButton = styled(ActionButton)`
+  background: #4255FF;
 `;
 
 const Toast = styled.div`
@@ -262,23 +268,22 @@ const SharePage = () => {
   const [showToast, setShowToast] = useState(false);
   const [isSecondStep, setIsSecondStep] = useState(false);
   const [scale, setScale] = useState(1);
+  const gameContainerRef = useRef(null);
 
   const outfitState = useSelector(state => ({
     KNT: {
       ...state.outfit.KNT,
-      mood: state.outfit.KNTMood|| "Default"
+      mood: state.outfit.KNTMood || "Default"
     },
     NYT: {
       ...state.outfit.NYT,
-      mood: state.outfit.NYTMood|| "Default"
+      mood: state.outfit.NYTMood || "Default"
     }
   }));
-
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("outfit");
-
 
     if (token) {
       const outfitData = parseShareToken(token);
@@ -286,8 +291,6 @@ const SharePage = () => {
         dispatch(loadOutfitFromToken(outfitData));
         setIsSecondStep(true);
       }
-    }else{
-        setIsSecondStep(false);
     }
   }, [dispatch]);
 
@@ -298,13 +301,17 @@ const SharePage = () => {
     }
   }, [showToast]);
 
+  const playSound = () => {
+    new Audio(menuClick).play().catch(console.error);
+  };
+
   const handleMoodChange = (character, mood) => {
-    new Audio(menuClick).play();
+    playSound();
     dispatch(setMood({ character, mood }));
   };
 
   const handleNavigate = (direction) => {
-    new Audio(menuClick).play();
+    playSound();
     setCurrentBgIndex((prev) => {
       if (direction === "next") {
         return prev === BGS.length - 1 ? 0 : prev + 1;
@@ -314,17 +321,35 @@ const SharePage = () => {
   };
 
   const handleZoom = (direction) => {
-    new Audio(menuClick).play();
+    playSound();
     setScale(prev => {
-      const newScale = direction === 'in' 
+      const newScale = direction === 'in'
         ? Math.min(ZOOM_LIMITS.MAX, prev + ZOOM_LIMITS.STEP)
         : Math.max(ZOOM_LIMITS.MIN, prev - ZOOM_LIMITS.STEP);
-      return Number(newScale.toFixed(1)); // Ensure clean decimal numbers
+      return Number(newScale.toFixed(1));
     });
   };
 
+  const handleShareToTwitter = () => {
+    playSound();
+    const shareUrl = generateShareUrl(outfitState);
+    const tweetText = encodeURIComponent(`${SHARE_TEMPLATE}${shareUrl}`);
+    window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank');
+  };
+
+  const handleCopyLink = async () => {
+    playSound();
+    const shareUrl = generateShareUrl(outfitState);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShowToast(true);
+    } catch (error) {
+      console.error('Failed to copy URL:', error);
+    }
+  };
+
   const handleBack = () => {
-    new Audio(menuClick).play();
+    playSound();
     if (isSecondStep) {
       setIsSecondStep(false);
     } else {
@@ -333,29 +358,19 @@ const SharePage = () => {
   };
 
   const handleConfirm = () => {
-    new Audio(menuClick).play();
+    playSound();
     setIsSecondStep(true);
   };
 
-  const handleShare = () => {
-    new Audio(menuClick).play();
-    const shareUrl = generateShareUrl(outfitState);
-
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => setShowToast(true))
-      .catch(console.error);
-  };
-
   const handlePlayAgain = () => {
-    new Audio(menuClick).play();
-    navigate("/game");
+    playSound();
+    navigate("/");
   };
 
   return (
     <PageContainer background={BGS[currentBgIndex]}>
       <CustomHeader />
-      <GameContainer>
+      <GameContainer ref={gameContainerRef}>
         <NavigationButton
           left
           hidden={isSecondStep}
@@ -370,8 +385,9 @@ const SharePage = () => {
         >
           ⏵
         </NavigationButton>
+
         <MoodBar left hidden={isSecondStep}>
-          <MoodTitle left>KANATA'S Expression</MoodTitle>
+          <MoodTitle>KANATA'S Expression</MoodTitle>
           <MoodButtonContainer>
             {CHARACTER_MOODS.KNT.map(({ name, image }) => (
               <MoodButton
@@ -419,36 +435,46 @@ const SharePage = () => {
         </FigureContainer>
 
         <ZoomControls hidden={isSecondStep}>
-        <ZoomButton
-          direction="out"
-          scale={scale}
-          onClick={() => handleZoom('out')}
-          aria-label="Zoom Out"
-        >
-          -
-        </ZoomButton>
-        <ZoomButton
-          direction="in"
-          scale={scale}
-          onClick={() => handleZoom('in')}
-          aria-label="Zoom In"
-        >
-          +
-        </ZoomButton>
-      </ZoomControls>
+          <ZoomButton
+            direction="out"
+            scale={scale}
+            onClick={() => handleZoom('out')}
+            aria-label="Zoom Out"
+          >
+            -
+          </ZoomButton>
+          <ZoomButton
+            direction="in"
+            scale={scale}
+            onClick={() => handleZoom('in')}
+            aria-label="Zoom In"
+          >
+            +
+          </ZoomButton>
+        </ZoomControls>
 
         <ActionBar>
           {isSecondStep ? (
             <>
-              <ActionButton onClick={handlePlayAgain}>PLAY AGAIN</ActionButton>
-              <ActionButton confirm onClick={handleShare}>
-                SHARE
+              <ActionButton onClick={handlePlayAgain}>
+                <Play size={20} />
+                PLAY AGAIN
               </ActionButton>
+              <TwitterButton onClick={handleShareToTwitter}>
+                <Twitter size={20} />
+                TWITTER
+              </TwitterButton>
+              <CopyLinkButton onClick={handleCopyLink}>
+                <Link size={20} />
+                COPY LINK
+              </CopyLinkButton>
             </>
           ) : (
             <>
-              <ActionButton onClick={handleBack}>BACK</ActionButton>
-              <ActionButton confirm onClick={handleConfirm}>
+              <ActionButton onClick={handleBack}>
+                BACK
+              </ActionButton>
+              <ActionButton onClick={handleConfirm}>
                 CONFIRM
               </ActionButton>
             </>
