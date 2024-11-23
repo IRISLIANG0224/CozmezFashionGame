@@ -240,7 +240,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "top",
     uiImage: NYTTop1UI,
     mainImage: NYTTop1,
-    position: { x: 84, y: 58, zIndex: 10 },
+    position: { x: 70, y: 80, zIndex: 10 },
   },
   {
     id: "NT002",
@@ -250,7 +250,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "top",
     uiImage: NYTTop2UI,
     mainImage: NYTTop2,
-    position: { x: 84, y: 58, zIndex: 10 },
+    position: { x: 78, y: 76, zIndex: 10 },
   },
   {
     id: "NT003",
@@ -260,7 +260,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "top",
     uiImage: NYTTop3UI,
     mainImage: NYTTop3,
-    position: { x: 84, y: 58, zIndex: 10 },
+    position: { x: 94, y: 72, zIndex: 10 },
   },
 
   // NYT Coats with base layers
@@ -273,8 +273,8 @@ export const NYT_CLOTHING_ITEMS = [
     uiImage: NYTCoat1UI,
     mainImage: NYTCoat1Top,
     baseImage: NYTCoat1Base,
-    position: { x: 84, y: 58, zIndex: 15 },
-    basePosition: { x: 84, y: 58, zIndex: 14 },
+    position: { x: 27, y: 100, zIndex: 15 },
+    basePosition: { x: 27, y: 100, zIndex: -1 },
   },
   {
     id: "NCT002",
@@ -285,8 +285,8 @@ export const NYT_CLOTHING_ITEMS = [
     uiImage: NYTCoat2UI,
     mainImage: NYTCoat2,
     baseImage: NYTCoat2Base,
-    position: { x: 84, y: 58, zIndex: 15 },
-    basePosition: { x: 84, y: 58, zIndex: 14 },
+    position: { x: 27, y: 28, zIndex: 15 },
+    basePosition: { x: 27, y: 28, zIndex: -1 },
   },
   {
     id: "NMCT001",
@@ -297,8 +297,8 @@ export const NYT_CLOTHING_ITEMS = [
     uiImage: NYTMiddleCoat1UI,
     mainImage: NYTMiddleCoat1Top,
     baseImage: NYTMiddleCoat1Base,
-    position: { x: 84, y: 58, zIndex: 13 },
-    basePosition: { x: 84, y: 58, zIndex: 12 },
+    position: { x: 39, y: 90, zIndex: 13 },
+    basePosition: { x: 39, y: 84, zIndex: -1 },
   },
   {
     id: "NOCT001",
@@ -309,8 +309,8 @@ export const NYT_CLOTHING_ITEMS = [
     uiImage: NYTOuterCoat1UI,
     mainImage: NYTOuterCoat1Top,
     baseImage: NYTOuterCoat1Base,
-    position: { x: 84, y: 58, zIndex: 17 },
-    basePosition: { x: 84, y: 58, zIndex: 16 },
+    position: { x: 0, y: 100, zIndex: 17 },
+    basePosition: { x: 0, y: 100, zIndex: -1 },
   },
 
   // NYT Shoes
@@ -513,8 +513,8 @@ export const KNT_CLOTHING_ITEMS = [
     uiImage: KNTCoat01UI,
     mainImage: KNTCoat01Top,
     baseImage: KNTCoat01Base,
-    position: { x: 30, y: 180, zIndex: 15 },
-    basePosition: { x: 32, y: 160, zIndex: -1 },
+    position: { x: 30, y: 160, zIndex: 15 },
+    basePosition: { x: 32, y: 140, zIndex: -1 },
   },
   {
     id: "KMCT001",

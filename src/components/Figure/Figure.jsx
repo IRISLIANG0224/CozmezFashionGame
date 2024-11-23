@@ -92,7 +92,7 @@ const CharacterName = styled.div`
     border-radius: 20px;
     font-size: 20px;
     font-weight: bold;
-    z-index: 1000;
+    z-index: 0;
 `;
 
 const Figure = ({ clothingItems, character }) => {
