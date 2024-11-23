@@ -3,10 +3,8 @@ import styled from "styled-components";
 import menuClick from "../../assests/audio/menu-click.mp3";
 import BG from "../../assests/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
-import Dialogue from "../../components/Dialogue";
-import Knt_Defualt from '../../assests/img/Intro/KNT/KNT_Default.png'
-import Knt_Shock from '../../assests/img/Intro/KNT/KNT_Shock.png'
-import Knt_Speechless from '../../assests/img/Intro/KNT/KNT_SpeechLess.png'
+import UITable from '../../components/UITable'
+import Figure from '../../components/Figure'
 
 const PageContainer = styled.div`
   width: 1024px;
