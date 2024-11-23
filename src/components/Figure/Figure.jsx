@@ -12,12 +12,14 @@ const FigureContainer = styled.div`
 `;
 
 const CharacterImage = styled.img`
-  position: absolute;
-  left: 50%;
-  top: 100px;
-  transform: translateX(-50%);
-  height: 600px;
-  object-fit: contain;
+    position: absolute;
+    left: 62%;
+    top: 5px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    height: 640px;
+    object-fit: contain;
 `;
 
 const ClothingContainer = styled.div`
@@ -79,21 +81,18 @@ const ClothingLayer = styled.img`
     }
   }
 `;
-
 const CharacterName = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 200px;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  z-index: 1000;
+    position: absolute;
+    top: 5px;
+    left: 32%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 1000;
 `;
-
 
 const Figure = ({ clothingItems, character }) => {
   const outfit = useSelector((state) => state.outfit[character]);
@@ -152,7 +151,7 @@ const Figure = ({ clothingItems, character }) => {
   return (
     <FigureContainer>
       <BaseFigure />
-      {/* <CharacterName>{character}</CharacterName> */}
+      <CharacterName>{character === "KNT" ?'KANATA':'NAYUTA'}</CharacterName>
       <CharacterImage src={character === "KNT" ? KNT : NYT} alt={character} />
       <ClothingContainer>{renderClothingLayers()}</ClothingContainer>
     </FigureContainer>

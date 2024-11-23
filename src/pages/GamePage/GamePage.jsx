@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import menuClick from "../../assets/audio/menu-click.mp3";
+import menuClick from "../../assets/audio/flashlight-clicking.mp3";
 import BG from "../../assets/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
 import { CLOTHING_TYPES, CHARACTERS, TYPE_TO_SLOT_MAP } from "../../constants";
@@ -13,17 +13,18 @@ import {
 import { generateShareUrl } from "../../utils/shareToken";
 import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
+import Cloth1 from "../../assets/img/Game/KNT/UI/Top_01.png";
 
 const PageContainer = styled.div`
   width: 1024px;
-  height:  720px;
+  height: 720px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   transform: translateX(-50%);
   background: url(${BG}) no-repeat center center;
   overflow: hidden;
-  margin-left:50%
+  margin-left: 50%;
 `;
 
 const GameContainer = styled.div`
@@ -36,7 +37,6 @@ const GameContainer = styled.div`
   overflow: hidden;
   padding: 20px;
 `;
-
 
 const LeftPanel = styled.div`
   position: relative;
@@ -51,8 +51,6 @@ const RightPanel = styled.div`
   padding: 20px;
 `;
 
-
-
 const CategoryBar = styled.div`
   position: absolute;
   top: 16px;
@@ -64,50 +62,58 @@ const CategoryBar = styled.div`
 `;
 
 const CategoryButton = styled.button`
-  flex: 1;
-  height: 100%;
+  flex: 0 1 60px;
   background: ${(props) =>
-    props.active ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.1)"};
-  color: white;
-  border: 2px solid
-    ${(props) => (props.active ? "white" : "rgba(255, 255, 255, 0.3)")};
-  border-radius: 8px;
+    props.active ? "rgb(144 106 179 / 46%)" : "rgb(7 187 189 / 39%)"};
+  color: #ffffff;
+  border: 2px solid white;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  font-size: 13px;
   text-transform: uppercase;
   transition: all 0.2s ease;
+  padding: 0 15px;
+  height: 40px;
+  font-weight: bold;
+  margin: 0 5px;
+
+  &:hover {
+    background: ${(props) =>
+      props.active ? "rgb(250 237 235 / 90%)" : "rgba(255, 255, 255, 0.2)"};
+  }
 `;
 
 const ActionBar = styled.div`
+  width: 430px;
   position: absolute;
-  bottom: 16px;
-  left: 20px;
+  bottom: 50px;
+  left: 33px;
   right: 20px;
   height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  gap: 12px;
+  gap: 80px;
 `;
 
 const ActionButton = styled.button`
   flex: 1;
   height: 100%;
   background: ${(props) => {
-    if (props.confirm) return "#4CAF50";
-    if (props.back) return "#2196F3";
-    return "#f44336";
+    if (props.confirm) return "rgb(144 106 179 / 46%)";
+    if (props.back) return "rgb(7 187 189 / 39%)";
+    return "rgb(7 187 189 / 39%)";
   }};
   color: white;
-  border: none;
-  border-radius: 8px;
+  border: 2px solid white;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   transition: all 0.2s ease;
 `;
-
-
 
 const GridContainer = styled.div`
   position: absolute;
@@ -117,8 +123,6 @@ const GridContainer = styled.div`
   bottom: 90px;
   overflow-y: auto;
 `;
-
-
 
 const Toast = styled.div`
   position: fixed;
@@ -313,7 +317,7 @@ const SAMPLE_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.TOPS,
     character: CHARACTERS.KNT,
     name: "Basic T-Shirt",
-    uiImage: "/path/to/ui-image.png",
+    uiImage: Cloth1,
     mainImage: "/path/to/main-image.png",
     position: { x: 0, y: 0, zIndex: 1 },
   },
