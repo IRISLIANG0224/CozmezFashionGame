@@ -34,19 +34,20 @@ import NytSpeechLess from "../../assets/img/Share/NYT/SpeechLess.png";
 const CHARACTER_MOODS = {
   KNT: [
     { name: "Default", image: KntDefault },
+    { name: "Happy", image: KntHappy },
     { name: "Serious", image: KntSerious },
     { name: "Pride", image: KntPride },
-    { name: "Happy", image: KntHappy },
-    { name: "SpeechLess", image: KntSpeechLess },
+    { name: "SpeechLess", image: KntSpeechLess }
   ],
   NYT: [
     { name: "Default", image: NytDefault },
+    { name: "Happy", image: NytHappy },
     { name: "Sad", image: NytSad },
     { name: "Shock", image: NytShock },
-    { name: "Happy", image: NytHappy },
-    { name: "SpeechLess", image: NytSpeechLess },
-  ],
+    { name: "SpeechLess", image: NytSpeechLess }
+  ]
 };
+
 
 const ZOOM_LIMITS = {
   MIN: 0.8,
@@ -106,6 +107,7 @@ const MoodTitle = styled.div`
 const MoodButtonContainer = styled.div`
   display: flex;
   gap: 10px;
+  z-index:100;
 `;
 
 const MoodButton = styled.button`
@@ -266,27 +268,17 @@ const SharePage = () => {
   const [isSecondStep, setIsSecondStep] = useState(false);
   const [scale, setScale] = useState(1);
 
-  //test only
-  const completeState = useSelector(state => state.outfit);
-  console.log('Complete Redux State:', completeState);
-
   const outfitState = useSelector(state => ({
     KNT: {
       ...state.outfit.KNT,
-      mood: state.outfit.KNTMood
+      mood: state.outfit.KNTMood|| "Default"
     },
     NYT: {
       ...state.outfit.NYT,
-      mood: state.outfit.NYTMood
+      mood: state.outfit.NYTMood|| "Default"
     }
   }));
 
-
-
-
-
-  //test only
-  console.log({outfitState})
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

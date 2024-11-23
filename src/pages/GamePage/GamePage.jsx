@@ -206,9 +206,6 @@ const GamePage = () => {
 
   const handleShare = () => {
    new Audio(menuClick).play();
-       //test only
-       console.log('State before navigation:', outfitState);
-       console.log('running')
    setTimeout(() => {
     navigate('/share');
    }, 1000);

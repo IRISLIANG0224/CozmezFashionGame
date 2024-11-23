@@ -13,12 +13,12 @@ import NytShock from "../../assets/img/Share/NYT/Face/Shock.png";
 import NytHappy from "../../assets/img/Share/NYT/Face/Happy.png";
 import NytSpeechLess from "../../assets/img/Share/NYT/Face/SpeechLess.png";
 
-
 const FigureContainer = styled.div`
   position: absolute;
   width: 380px;
   height: 100%;
   overflow: hidden;
+  pointer-events: none;
 `;
 
 const CharacterImage = styled.img`
@@ -30,6 +30,7 @@ const CharacterImage = styled.img`
     transform: translateX(-50%);
     height: 640px;
     object-fit: contain;
+    pointer-events: none;
 `;
 
 const ClothingContainer = styled.div`
@@ -40,8 +41,6 @@ const ClothingContainer = styled.div`
   height: 100%;
   pointer-events: none;
 `;
-
-
 
 const BaseFigure = styled.div`
   position: absolute;
@@ -62,8 +61,6 @@ const BaseFigure = styled.div`
     border-radius: 50px;
   }
 `;
-
-
 
 const ClothingLayer = styled.img`
   position: absolute;
@@ -87,6 +84,7 @@ const ClothingLayer = styled.img`
     }
   }
 `;
+
 const CharacterName = styled.div`
     position: absolute;
     top: 5px;
@@ -100,9 +98,84 @@ const CharacterName = styled.div`
     z-index: 0;
 `;
 
-const Figure = ({ character,hideName=false }) => {
-  const outfit = useSelector((state) => state.outfit[character]);
-  const clothingItems = CLOTHING_ITEMS
+const MoodImage = styled.img`
+    position: absolute;
+    left: ${props => props.x || '159px'};
+    top: ${props => props.y || '29px'};
+    object-fit: contain;
+    z-index: 1;
+    transform: scale(0.68);
+`;
+
+const getMoodConfig = (character, mood) => {
+  const moodConfigs = {
+    KNT: {
+      Default: { image: null },
+      Happy: { 
+        image: KntHappy,
+        x: '169px',
+        y: '37px'
+
+      },
+      Serious: { 
+        image: KntSerious,
+        x: '169px',
+        y: '33.5px'
+      },
+      Pride: { 
+        image: KntPride,
+        x: '159px',
+        y: '29px'
+      },
+      SpeechLess: { 
+        image: KntSpeechLess,
+        x: '152px',
+        y: '21.5px'
+      }
+    },
+    NYT: {
+      Default: { image: null },
+      Sad: { 
+        image: NytSad,
+        x: '131px',
+        y: '43.5px'
+      },
+      Shock: { 
+        image: NytShock,
+        x: '134.5px',
+        y: '9px'
+      },
+      Happy: { 
+        image: NytHappy,
+        x: '131px',
+        y: '24.5px'
+      },
+      SpeechLess: { 
+        image: NytSpeechLess,
+        x: '131px',
+        y: '34.5px'
+      }
+    }
+  };
+
+  return moodConfigs[character]?.[mood] || { image: null };
+};
+
+const Figure = ({ character, hideName = false }) => {
+  const outfitState = useSelector(state => ({
+    KNT: {
+      ...state.outfit.KNT,
+      mood: state.outfit.KNTMood
+    },
+    NYT: {
+      ...state.outfit.NYT,
+      mood: state.outfit.NYTMood
+    }
+  }));
+  
+  const outfit = outfitState[character];
+  const clothingItems = CLOTHING_ITEMS;
+  const moodConfig = getMoodConfig(character, outfit.mood);
 
   const renderClothingLayers = () => {
     const layers = [];
@@ -158,8 +231,16 @@ const Figure = ({ character,hideName=false }) => {
   return (
     <FigureContainer>
       <BaseFigure />
-      {!hideName&&<CharacterName>{character === "KNT" ?'KANATA':'NAYUTA'}</CharacterName>}
+      {!hideName && <CharacterName>{character === "KNT" ? 'KANATA' : 'NAYUTA'}</CharacterName>}
       <CharacterImage src={character === "KNT" ? KNT : NYT} alt={character} />
+      {moodConfig.image && (
+        <MoodImage 
+          src={moodConfig.image} 
+          alt={`${character} mood`}
+          x={moodConfig.x}
+          y={moodConfig.y}
+        />
+      )}
       <ClothingContainer>{renderClothingLayers()}</ClothingContainer>
     </FigureContainer>
   );
