@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import FirstPage from "./pages/FirstPage";
 import HomePage from "./pages/HomePage"
 import IntroPage from "./pages/IntroPage";
 import GamePage from "./pages/GamePage";
