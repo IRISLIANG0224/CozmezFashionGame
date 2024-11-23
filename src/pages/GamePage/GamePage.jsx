@@ -13,7 +13,7 @@ import {
 import { generateShareUrl } from "../../utils/shareToken";
 import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
-import Cloth1 from "../../assets/img/Game/KNT/UI/Top_01.png";
+import CLOTHING_ITEMS from '../../constants/clothes'
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -249,7 +249,7 @@ const GamePage = () => {
     }
   };
 
-  const filteredItems = SAMPLE_CLOTHING_ITEMS.filter(
+  const filteredItems = CLOTHING_ITEMS.filter(
     (item) =>
       item.type === currentCategory &&
       item.character === outfitState.currentCharacter
@@ -261,7 +261,7 @@ const GamePage = () => {
       <GameContainer>
         <LeftPanel>
           <Figure
-            clothingItems={SAMPLE_CLOTHING_ITEMS}
+            clothingItems={CLOTHING_ITEMS}
             character={outfitState.currentCharacter}
           />
         </LeftPanel>
@@ -311,16 +311,16 @@ const GamePage = () => {
   );
 };
 
-const SAMPLE_CLOTHING_ITEMS = [
-  {
-    id: "T001",
-    type: CLOTHING_TYPES.TOPS,
-    character: CHARACTERS.KNT,
-    name: "Basic T-Shirt",
-    uiImage: Cloth1,
-    mainImage: "/path/to/main-image.png",
-    position: { x: 0, y: 0, zIndex: 1 },
-  },
-];
+// const SAMPLE_CLOTHING_ITEMS = [
+//   {
+//     id: "T001",
+//     type: CLOTHING_TYPES.TOPS,
+//     character: CHARACTERS.KNT,
+//     name: "Basic T-Shirt",
+//     uiImage: Cloth1,
+//     mainImage: "/path/to/main-image.png",
+//     position: { x: 0, y: 0, zIndex: 1 },
+//   },
+// ];
 
 export default GamePage;
