@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Camera } from "lucide-react";
+import html2canvas from "html2canvas";
 import menuClick from "../../assets/audio/menu-click.mp3";
 import BG from "../../assets/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
@@ -30,31 +32,28 @@ import NytShock from "../../assets/img/Share/NYT/Shock.png";
 import NytHappy from "../../assets/img/Share/NYT/Happy.png";
 import NytSpeechLess from "../../assets/img/Share/NYT/SpeechLess.png";
 
-
 const CHARACTER_MOODS = {
   KNT: [
     { name: "Default", image: KntDefault },
     { name: "Happy", image: KntHappy },
     { name: "Serious", image: KntSerious },
     { name: "Pride", image: KntPride },
-    { name: "SpeechLess", image: KntSpeechLess }
+    { name: "SpeechLess", image: KntSpeechLess },
   ],
   NYT: [
     { name: "Default", image: NytDefault },
     { name: "Happy", image: NytHappy },
     { name: "Sad", image: NytSad },
     { name: "Shock", image: NytShock },
-    { name: "SpeechLess", image: NytSpeechLess }
-  ]
+    { name: "SpeechLess", image: NytSpeechLess },
+  ],
 };
-
 
 const ZOOM_LIMITS = {
   MIN: 0.8,
   MAX: 1.2,
-  STEP: 0.1
+  STEP: 0.1,
 };
-
 
 const BGS = [bg_1, bg_2, bg_3, bg_4];
 
@@ -107,7 +106,6 @@ const MoodTitle = styled.div`
 const MoodButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-  z-index:100;
 `;
 
 const MoodButton = styled.button`
@@ -168,27 +166,31 @@ const ZoomButton = styled.button`
   cursor: pointer;
   color: white;
   font-size: 30px;
-  opacity: ${props => {
-    if (props.direction === 'in' && props.scale >= ZOOM_LIMITS.MAX) return 0.5;
-    if (props.direction === 'out' && props.scale <= ZOOM_LIMITS.MIN) return 0.5;
+  opacity: ${(props) => {
+    if (props.direction === "in" && props.scale >= ZOOM_LIMITS.MAX) return 0.5;
+    if (props.direction === "out" && props.scale <= ZOOM_LIMITS.MIN) return 0.5;
     return 1;
   }};
-  pointer-events: ${props => {
-    if (props.direction === 'in' && props.scale >= ZOOM_LIMITS.MAX) return 'none';
-    if (props.direction === 'out' && props.scale <= ZOOM_LIMITS.MIN) return 'none';
-    return 'auto';
+  pointer-events: ${(props) => {
+    if (props.direction === "in" && props.scale >= ZOOM_LIMITS.MAX)
+      return "none";
+    if (props.direction === "out" && props.scale <= ZOOM_LIMITS.MIN)
+      return "none";
+    return "auto";
   }};
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   transition: opacity 0.3s ease;
-  
+
   &:hover {
-    opacity: ${props => {
-      if (props.direction === 'in' && props.scale >= ZOOM_LIMITS.MAX) return 0.5;
-      if (props.direction === 'out' && props.scale <= ZOOM_LIMITS.MIN) return 0.5;
+    opacity: ${(props) => {
+      if (props.direction === "in" && props.scale >= ZOOM_LIMITS.MAX)
+        return 0.5;
+      if (props.direction === "out" && props.scale <= ZOOM_LIMITS.MIN)
+        return 0.5;
       return 0.8;
     }};
   }
@@ -198,12 +200,7 @@ const ActionBar = styled.div`
   position: absolute;
   bottom: 10px;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   gap: 450px;
   background-color: #ffffff70;
@@ -260,30 +257,59 @@ const GameFooter = styled.div`
   color: #666;
 `;
 
+const CameraButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgb(47 63 175 / 72%);
+  border: 2px solid white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  &:hover {
+    background: rgb(47 63 175 / 90%);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const MobileToast = styled(Toast)`
+  background: #2196f3;
+`;
+
 const SharePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [showToast, setShowToast] = useState(false);
+  const [mobileToast, setMobileToast] = useState(false);
   const [isSecondStep, setIsSecondStep] = useState(false);
   const [scale, setScale] = useState(1);
 
-  const outfitState = useSelector(state => ({
+  const outfitState = useSelector((state) => ({
     KNT: {
       ...state.outfit.KNT,
-      mood: state.outfit.KNTMood|| "Default"
+      mood: state.outfit.KNTMood,
     },
     NYT: {
       ...state.outfit.NYT,
-      mood: state.outfit.NYTMood|| "Default"
-    }
+      mood: state.outfit.NYTMood,
+    },
   }));
-
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
-
 
     if (token) {
       const outfitData = parseShareToken(token);
@@ -291,8 +317,8 @@ const SharePage = () => {
         dispatch(loadOutfitFromToken(outfitData));
         setIsSecondStep(true);
       }
-    }else{
-        setIsSecondStep(false);
+    } else {
+      setIsSecondStep(false);
     }
   }, [dispatch]);
 
@@ -303,9 +329,67 @@ const SharePage = () => {
     }
   }, [showToast]);
 
+  const handleScreenshot = async () => {
+    new Audio(menuClick).play();
+  
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+    if (isMobile) {
+      setMobileToast(true);
+      setTimeout(() => setMobileToast(false), 3000);
+      return;
+    }
+  
+    try {
+      const element = document.querySelector('.page-container');
+      if (!element) {
+        throw new Error('Container element not found');
+      }
+  
+      await Promise.all(
+        Array.from(element.getElementsByTagName('img')).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        })
+      );
+  
+      const canvas = await html2canvas(element, {
+        useCORS: true,
+        scale: 2,
+        backgroundColor: null,
+        logging: true,
+        allowTaint: true,
+        foreignObjectRendering: true,
+        width: 1024,
+        height: 720,
+        x: 0,
+        y: 0,
+        windowWidth: 1024,
+        windowHeight: 720,
+        ignoreElements: (element) => {
+          // Ignore elements that shouldn't be in the screenshot
+          return element.classList.contains('camera-button') ||
+                 element.classList.contains('toast');
+        }
+      });
+  
+      const link = document.createElement('a');
+      link.download = `dress-up-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      
+      setShowToast(true);
+    } catch (error) {
+      console.error('Screenshot failed:', error);
+    }
+  };
+
   const handleMoodChange = (character, mood) => {
     new Audio(menuClick).play();
-    dispatch(setMood({ character, mood }));
+    dispatch(setMood({ character, mood: mood === "Default" ? null : mood }));
   };
 
   const handleNavigate = (direction) => {
@@ -320,11 +404,12 @@ const SharePage = () => {
 
   const handleZoom = (direction) => {
     new Audio(menuClick).play();
-    setScale(prev => {
-      const newScale = direction === 'in' 
-        ? Math.min(ZOOM_LIMITS.MAX, prev + ZOOM_LIMITS.STEP)
-        : Math.max(ZOOM_LIMITS.MIN, prev - ZOOM_LIMITS.STEP);
-      return Number(newScale.toFixed(1)); // Ensure clean decimal numbers
+    setScale((prev) => {
+      const newScale =
+        direction === "in"
+          ? Math.min(ZOOM_LIMITS.MAX, prev + ZOOM_LIMITS.STEP)
+          : Math.max(ZOOM_LIMITS.MIN, prev - ZOOM_LIMITS.STEP);
+      return Number(newScale.toFixed(1));
     });
   };
 
@@ -358,9 +443,9 @@ const SharePage = () => {
   };
 
   return (
-    <PageContainer background={BGS[currentBgIndex]}>
+    <PageContainer background={BGS[currentBgIndex]}   className="page-container">
       <CustomHeader />
-      <GameContainer>
+      <GameContainer className="game-container">
         <NavigationButton
           left
           hidden={isSecondStep}
@@ -375,6 +460,13 @@ const SharePage = () => {
         >
           ⏵
         </NavigationButton>
+
+        {isSecondStep && (
+          <CameraButton onClick={handleScreenshot} aria-label="Take screenshot">
+            <Camera size={24} color="white" />
+          </CameraButton>
+        )}
+
         <MoodBar left hidden={isSecondStep}>
           <MoodTitle left>KANATA'S Expression</MoodTitle>
           <MoodButtonContainer>
@@ -424,23 +516,23 @@ const SharePage = () => {
         </FigureContainer>
 
         <ZoomControls hidden={isSecondStep}>
-        <ZoomButton
-          direction="out"
-          scale={scale}
-          onClick={() => handleZoom('out')}
-          aria-label="Zoom Out"
-        >
-          -
-        </ZoomButton>
-        <ZoomButton
-          direction="in"
-          scale={scale}
-          onClick={() => handleZoom('in')}
-          aria-label="Zoom In"
-        >
-          +
-        </ZoomButton>
-      </ZoomControls>
+          <ZoomButton
+            direction="out"
+            scale={scale}
+            onClick={() => handleZoom("out")}
+            aria-label="Zoom Out"
+          >
+            -
+          </ZoomButton>
+          <ZoomButton
+            direction="in"
+            scale={scale}
+            onClick={() => handleZoom("in")}
+            aria-label="Zoom In"
+          >
+            +
+          </ZoomButton>
+        </ZoomControls>
 
         <ActionBar>
           {isSecondStep ? (
@@ -460,7 +552,12 @@ const SharePage = () => {
           )}
         </ActionBar>
       </GameContainer>
-      {showToast && <Toast>Share URL copied to clipboard! 🎉</Toast>}
+      {showToast && <Toast>Screenshot saved! 🎉</Toast>}
+      {mobileToast && (
+        <MobileToast>
+          Please use your device's built-in screenshot function 📱
+        </MobileToast>
+      )}
       <GameFooter />
     </PageContainer>
   );
