@@ -286,10 +286,17 @@ const SharePage = () => {
     const token = urlParams.get("outfit");
 
     if (token) {
-      const outfitData = parseShareToken(token);
-      if (outfitData) {
-        dispatch(loadOutfitFromToken(outfitData));
-        setIsSecondStep(true);
+      try {
+        const outfitData = parseShareToken(token);
+        if (outfitData) {
+          dispatch(loadOutfitFromToken(outfitData));
+          setIsSecondStep(true);
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error('Invalid token:', error);
+        navigate("/");
       }
     }
   }, [dispatch]);

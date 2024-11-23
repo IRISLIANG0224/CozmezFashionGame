@@ -1,67 +1,51 @@
-/**
- * Share token utilities for outfit and mood sharing
- */
-
-/**
- * Generate a share token containing both characters' outfit and mood data
- * @param {Object} state - Current Redux state for outfits and moods
- * @returns {string} Base64 encoded token
- */
 export const generateShareToken = (state) => {
-  // Extract relevant data from state
   const shareData = {
-    KNT: {
-      ...state.KNT,
-      mood: state.KNTMood
+    k: {
+      m: state.KNT.mood,
+      o: { ...state.KNT }
     },
-    NYT: {
-      ...state.NYT,
-      mood: state.NYTMood
+    n: {
+      m: state.NYT.mood,
+      o: { ...state.NYT }
     }
   };
+  
+  delete shareData.k.o.mood;
+  delete shareData.n.o.mood;
 
-  return btoa(JSON.stringify(shareData));
+  const compressedData = JSON.stringify(shareData);
+  return btoa(compressedData)
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
 };
 
-/**
- * Parse a share token back into outfit and mood configurations
- * @param {string} token - Base64 encoded share token
- * @returns {Object|null} Decoded outfit and mood data or null if invalid
- */
 export const parseShareToken = (token) => {
   try {
+    token = token.replace(/-/g, '+').replace(/_/g, '/');
+    while (token.length % 4) token += '=';
+    
     const decodedData = JSON.parse(atob(token));
 
-    // Validate data structure
-    if (!decodedData.KNT || !decodedData.NYT) {
-      throw new Error('Invalid data structure');
-    }
-
-    // Extract moods and outfits
-    const outfitData = {
+    return {
       KNT: {
-        ...decodedData.KNT,
-        mood: decodedData.KNT.mood || 'Default'
+        ...decodedData.k.o,
+        mood: decodedData.k.m || 'Default'
       },
       NYT: {
-        ...decodedData.NYT,
-        mood: decodedData.NYT.mood || 'Default'
-      }
+        ...decodedData.n.o,
+        mood: decodedData.n.m || 'Default'
+      },
+      KNTMood: decodedData.k.m || 'Default',
+      NYTMood: decodedData.n.m || 'Default'
     };
-
-    return outfitData;
   } catch (error) {
     console.error('Invalid share token:', error);
     return null;
   }
 };
 
-/**
- * Generate a complete share URL with outfit and mood data
- * @param {Object} state - Current Redux state for outfits and moods
- * @returns {string} Complete share URL
- */
 export const generateShareUrl = (state) => {
   const token = generateShareToken(state);
-  return `${window.location.origin}/share?outfit=${encodeURIComponent(token)}`;
+  return `${window.location.origin}/share?outfit=${token}`;
 };

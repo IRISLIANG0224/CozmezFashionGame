@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import menuClick from "../../assets/audio/cute-click.mp3";
 import cover_1 from "../../assets/img/Home/cover-1.png";
 import cover_2 from "../../assets/img/Home/cover-2.png";
-import cover_3 from "../../assets/img/Home/cover-1.png";
+import cover_3 from "../../assets/img/Home/cover-3.png";
 import cover_4 from "../../assets/img/Home/cover-4.png";
 import startButton from "../../assets/img/Home/start.png";
 import closeButton from "../../assets/img/Home/quit.png";
@@ -76,16 +77,18 @@ const GameAuthor = styled.div`
   text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.6);
 `;
 
-const handleClickStart = () => {
-  new Audio(menuClick).play();
-  setTimeout(() => {
-    window.location.href = "/intro";
-  }, 1000);
-};
-
 const HomePage = () => {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const covers = [cover_1, cover_2, cover_3, cover_4];
+
+  const handleClickStart = () => {
+    new Audio(menuClick).play();
+    setTimeout(() => {
+      navigate("/intro");
+    }, 1000);
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % covers.length);
