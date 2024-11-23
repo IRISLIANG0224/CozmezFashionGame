@@ -14,6 +14,7 @@ import { generateShareUrl } from "../../utils/shareToken";
 import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
 import CLOTHING_ITEMS from "../../constants/clothes";
+import { useNavigate } from 'react-router-dom';
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -162,6 +163,7 @@ const GamePage = () => {
   const [currentCategory, setCurrentCategory] = useState(CLOTHING_TYPES.TOPS);
   const [showToast, setShowToast] = useState(false);
   const [isSecondStep, setIsSecondStep] = useState(false);
+  const navigate = useNavigate();
 
   const outfitState = useSelector(state => ({
     currentCharacter: state.outfit.currentCharacter,
@@ -204,8 +206,11 @@ const GamePage = () => {
 
   const handleShare = () => {
    new Audio(menuClick).play();
+       //test only
+       console.log('State before navigation:', outfitState);
+       console.log('running')
    setTimeout(() => {
-     window.location.href = "/share";
+    navigate('/share');
    }, 1000);
   };
 
@@ -245,7 +250,6 @@ const GamePage = () => {
       <GameContainer>
         <LeftPanel>
           <Figure
-            clothingItems={CLOTHING_ITEMS}
             character={outfitState.currentCharacter}
           />
         </LeftPanel>

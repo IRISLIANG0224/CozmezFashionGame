@@ -30,6 +30,7 @@ import NytShock from "../../assets/img/Share/NYT/Shock.png";
 import NytHappy from "../../assets/img/Share/NYT/Happy.png";
 import NytSpeechLess from "../../assets/img/Share/NYT/SpeechLess.png";
 
+
 const CHARACTER_MOODS = {
   KNT: [
     { name: "Default", image: KntDefault },
@@ -265,20 +266,32 @@ const SharePage = () => {
   const [isSecondStep, setIsSecondStep] = useState(false);
   const [scale, setScale] = useState(1);
 
-  const outfitState = useSelector((state) => ({
+  //test only
+  const completeState = useSelector(state => state.outfit);
+  console.log('Complete Redux State:', completeState);
+
+  const outfitState = useSelector(state => ({
     KNT: {
       ...state.outfit.KNT,
-      mood: state.outfit.KNTMood,
+      mood: state.outfit.KNTMood
     },
     NYT: {
       ...state.outfit.NYT,
-      mood: state.outfit.NYTMood,
-    },
+      mood: state.outfit.NYTMood
+    }
   }));
+
+
+
+
+
+  //test only
+  console.log({outfitState})
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
+
 
     if (token) {
       const outfitData = parseShareToken(token);
@@ -286,6 +299,8 @@ const SharePage = () => {
         dispatch(loadOutfitFromToken(outfitData));
         setIsSecondStep(true);
       }
+    }else{
+        setIsSecondStep(false);
     }
   }, [dispatch]);
 

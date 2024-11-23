@@ -3,6 +3,16 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import KNT from "../../assets/img/Game/KNT/KNT.png";
 import NYT from "../../assets/img/Game/NYT/NYT.png";
+import CLOTHING_ITEMS from "../../constants/clothes";
+import KntHappy from "../../assets/img/Share/KNT/Face/Happy.png";
+import KntSerious from "../../assets/img/Share/KNT/Face/Serious.png";
+import KntPride from "../../assets/img/Share/KNT/Face/Pride.png";
+import KntSpeechLess from "../../assets/img/Share/KNT/Face/SpeechLess.png";
+import NytSad from "../../assets/img/Share/NYT/Face/Sad.png";
+import NytShock from "../../assets/img/Share/NYT/Face/Shock.png";
+import NytHappy from "../../assets/img/Share/NYT/Face/Happy.png";
+import NytSpeechLess from "../../assets/img/Share/NYT/Face/SpeechLess.png";
+
 
 const FigureContainer = styled.div`
   position: absolute;
@@ -39,11 +49,6 @@ const BaseFigure = styled.div`
   left: 0;
   width: 400px;
   height: 800px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.05)
-  );
   z-index: 0;
 
   &::before {
@@ -95,8 +100,9 @@ const CharacterName = styled.div`
     z-index: 0;
 `;
 
-const Figure = ({ clothingItems, character,hideName=false }) => {
+const Figure = ({ character,hideName=false }) => {
   const outfit = useSelector((state) => state.outfit[character]);
+  const clothingItems = CLOTHING_ITEMS
 
   const renderClothingLayers = () => {
     const layers = [];

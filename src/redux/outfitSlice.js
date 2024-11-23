@@ -1,6 +1,6 @@
 /**
  * Outfit management slice
- * Handles all state changes related to character outfits and moods
+ * Handles all state changes related to character outfits
  */
 import { createSlice } from '@reduxjs/toolkit';
 import { CHARACTERS } from '../constants';
@@ -25,7 +25,7 @@ const initialOutfit = {
 
 /**
  * Complete initial state for the outfit slice
- * Includes outfit data and moods for both characters
+ * Includes outfit data for both characters
  */
 const initialState = {
   currentCharacter: CHARACTERS.KNT,
@@ -70,7 +70,7 @@ const outfitSlice = createSlice({
     },
 
     /**
-     * Sets the mood for a specific character
+     * Sets mood for a character
      * @param {Object} state - Current Redux state
      * @param {Object} action - Action with payload containing character and mood
      */
@@ -84,51 +84,46 @@ const outfitSlice = createSlice({
     },
 
     /**
-     * Loads outfit and mood data from a share token
+     * Loads outfit data from a share token
      * @param {Object} state - Current Redux state
-     * @param {Object} action - Action with payload containing outfit and mood data
+     * @param {Object} action - Action with payload containing outfit data for both characters
      */
     loadOutfitFromToken(state, action) {
       const { KNT, NYT } = action.payload;
       
+      // Load KNT data
       if (KNT) {
-        // Load KNT outfit data
         Object.keys(initialOutfit).forEach(slot => {
-          state.KNT[slot] = KNT[slot] || '0';
+          if (KNT[slot]) {
+            state.KNT[slot] = KNT[slot];
+          }
         });
-        state.KNTMood = KNT.mood || 'Default';
+        if (KNT.mood) {
+          state.KNTMood = KNT.mood;
+        }
       }
-      
-      if (NYT) {
-        // Load NYT outfit data
-        Object.keys(initialOutfit).forEach(slot => {
-          state.NYT[slot] = NYT[slot] || '0';
-        });
-        state.NYTMood = NYT.mood || 'Default';
-      }
-    },
 
-    /**
-     * Clears all outfits and resets moods to default
-     * @param {Object} state - Current Redux state
-     */
-    clearAll(state) {
-      state.KNT = { ...initialOutfit };
-      state.NYT = { ...initialOutfit };
-      state.KNTMood = 'Default';
-      state.NYTMood = 'Default';
+      // Load NYT data
+      if (NYT) {
+        Object.keys(initialOutfit).forEach(slot => {
+          if (NYT[slot]) {
+            state.NYT[slot] = NYT[slot];
+          }
+        });
+        if (NYT.mood) {
+          state.NYTMood = NYT.mood;
+        }
+      }
     }
   }
 });
 
-// Export actions and reducer
 export const {
   setClothingItem,
   clearOutfit,
   switchCharacter,
   setMood,
-  loadOutfitFromToken,
-  clearAll
+  loadOutfitFromToken
 } = outfitSlice.actions;
 
 export default outfitSlice.reducer;
