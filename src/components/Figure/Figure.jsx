@@ -13,7 +13,7 @@ const FigureContainer = styled.div`
 
 const CharacterImage = styled.img`
     position: absolute;
-    left: 62%;
+    left: 53%;
     top: 5px;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
@@ -69,15 +69,16 @@ const ClothingLayer = styled.img`
   z-index: ${(props) => props.zIndex};
   transform-origin: center;
   animation: appear 0.3s ease;
+  transform: scale(0.7);
 
   @keyframes appear {
     from {
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.7);
     }
     to {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(0.9);
     }
   }
 `;
