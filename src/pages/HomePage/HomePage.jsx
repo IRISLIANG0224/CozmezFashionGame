@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import menuClick from "../../assests/audio/menu-click.mp3";
-import cover_1 from "../../assests/img/Home/cover-1.png";
-import cover_2 from "../../assests/img/Home/cover-2.png";
-import cover_3 from "../../assests/img/Home/cover-1.png";
-import cover_4 from "../../assests/img/Home/cover-4.png";
-import startButton from "../../assests/img/Home/start.png";
-import closeButton from "../../assests/img/Home/quit.png";
-import CustomHeader from '../../components/CustomHeader'
-
+import menuClick from "../../assets/audio/menu-click.mp3";
+import cover_1 from "../../assets/img/Home/cover-1.png";
+import cover_2 from "../../assets/img/Home/cover-2.png";
+import cover_3 from "../../assets/img/Home/cover-1.png";
+import cover_4 from "../../assets/img/Home/cover-4.png";
+import startButton from "../../assets/img/Home/start.png";
+import closeButton from "../../assets/img/Home/quit.png";
+import CustomHeader from "../../components/CustomHeader";
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -77,13 +76,11 @@ const GameAuthor = styled.div`
   text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.6);
 `;
 
-
-
 const handleClickStart = () => {
   new Audio(menuClick).play();
   setTimeout(() => {
-    window.location.href = '/intro';
-  }, 1000); 
+    window.location.href = "/intro";
+  }, 1000);
 };
 
 const HomePage = () => {
@@ -98,7 +95,7 @@ const HomePage = () => {
 
   return (
     <PageContainer>
-      <CustomHeader/>
+      <CustomHeader />
       <GameContainer>
         {covers.map((cover, index) => (
           <ImageContainer key={index} active={currentImageIndex === index}>
@@ -115,11 +112,7 @@ const HomePage = () => {
         </GameTitle>
 
         <ButtonsContainer>
-          <Button
-            src={startButton}
-            alt="Start"
-            onClick={handleClickStart}
-          />
+          <Button src={startButton} alt="Start" onClick={handleClickStart} />
           <Button src={closeButton} alt="Quit" />
         </ButtonsContainer>
       </GameContainer>

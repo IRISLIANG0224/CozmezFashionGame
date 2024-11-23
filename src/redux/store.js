@@ -1,19 +1,36 @@
-import { createStore, applyMiddleware,compose } from "redux";
-import reducer from "./reducer";
-import {persistStore, persistReducer} from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import ReduxThunk from 'redux-thunk';
+import outfitReducer from './outfitSlice';
 
-const storageConfig = {
-    key: 'root', 
-    storage:storage, 
-    whitelist: ['id','email'] 
-}
+/**
+ * Redux persist configuration
+ */
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['outfit'] // Only persist outfit state
+};
 
-const middlewares = [ReduxThunk];
+/**
+ * Create persisted reducer
+ */
+const persistedReducer = persistReducer(persistConfig, outfitReducer);
 
-const myPersistReducer = persistReducer(storageConfig, reducer)
-const store = createStore(myPersistReducer,compose(applyMiddleware(...middlewares)),)
-export const persistor = persistStore(store)
+/**
+ * Configure store with persisted reducer
+ */
+const store = configureStore({
+  reducer: {
+    outfit: persistedReducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }),
+});
 
+export const persistor = persistStore(store);
 export default store;

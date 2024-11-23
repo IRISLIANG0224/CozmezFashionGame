@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import menuClick from "../../assests/audio/menu-click.mp3";
-import BG from "../../assests/img/Intro/back.png";
+import menuClick from "../../assets/audio/menu-click.mp3";
+import BG from "../../assets/img/Intro/back.png";
 import CustomHeader from "../../components/CustomHeader";
 import Dialogue from "../../components/Dialogue";
-import Knt_Defualt from '../../assests/img/Intro/KNT/KNT_Default.png'
-import Knt_Shock from '../../assests/img/Intro/KNT/KNT_Shock.png'
-import Knt_Speechless from '../../assests/img/Intro/KNT/KNT_SpeechLess.png'
+import Knt_Defualt from "../../assets/img/Intro/KNT/KNT_Default.png";
+import Knt_Shock from "../../assets/img/Intro/KNT/KNT_Shock.png";
+import Knt_Speechless from "../../assets/img/Intro/KNT/KNT_SpeechLess.png";
 
-
-const Chat_list=[]
+const Chat_list = [];
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -28,7 +27,6 @@ const GameContainer = styled.div`
   position: relative;
   overflow: hidden;
 `;
-
 
 const SkipButton = styled.button`
   position: absolute;
@@ -68,8 +66,8 @@ const GameFooter = styled.div`
 const handleClickSkip = () => {
   new Audio(menuClick).play();
   setTimeout(() => {
-    window.location.href = '/game';
-  }, 1000); 
+    window.location.href = "/game";
+  }, 1000);
 };
 
 const IntroPage = () => {
@@ -84,10 +82,10 @@ const IntroPage = () => {
           fontSize="28px"
           bold={true}
           character={Knt_Defualt}
-          position='left'
+          position="left"
         />
       </GameContainer>
-      <GameFooter/>
+      <GameFooter />
     </PageContainer>
   );
 };
