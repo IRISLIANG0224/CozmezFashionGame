@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import menuClick from "../../assets/audio/menu-click.mp3";
 import BG from "../../assets/img/Intro/back.png";
 import ChatKNT from "../../assets/img/Intro/chat-KNT.png";
+import ChatNYT from "../../assets/img/Intro/chat-NYT.png"
 import CustomHeader from "../../components/CustomHeader";
 import Knt_Default from "../../assets/img/Intro/KNT/KNT_Default.png";
 import Knt_Shock from "../../assets/img/Intro/KNT/KNT_Shock.png";
@@ -23,6 +24,8 @@ const PageContainer = styled.div`
   overflow: hidden;
   margin-left: 50%;
   position: relative;
+  opacity: ${props => props.visible ? 1 : 0};
+  transition: opacity 1s ease;
 `;
 
 const GameContainer = styled.div`
@@ -144,7 +147,20 @@ const IntroPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFinal, setShowFinal] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [dialogueVisible, setDialogueVisible] = useState(true);
+
+  const [dialogueVisible, setDialogueVisible] = useState(false);  
+  const [pageVisible, setPageVisible] = useState(false);  
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setPageVisible(true);
+
+      setTimeout(() => {
+        setDialogueVisible(true);
+      }, 500);
+    }, 100);
+  }, []);
 
   useEffect(() => {
     let timer;
@@ -171,7 +187,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Default,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: "Yeah, I'm preparing outfits for our 5th anniversary.",
       fontSize: "28px",
       bold: true
@@ -179,7 +195,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Default,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: " Hmm... what should we wear?",
       fontSize: "28px",
       bold: true
@@ -187,7 +203,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Idea,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: "Oh, Why don't YOU coordinate our outfits this time? ",
       fontSize: "28px",
       bold: true
@@ -195,7 +211,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Happy,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: " You've watched me style clothes for so long,",
       fontSize: "28px",
       bold: true
@@ -203,7 +219,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Happy,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: " you must have picked up some tips!",
       fontSize: "28px",
       bold: true
@@ -219,7 +235,7 @@ const IntroPage = () => {
     {
       position: "right",
       character: Nyt_Happy,
-      characterName: "NYANTA",
+      characterName: "NAYUTA",
       dialogueText: "Perfect! Then it's decided. I'm counting on you.",
       fontSize: "28px",
       bold: true
@@ -282,7 +298,7 @@ const IntroPage = () => {
   const currentDialogue = Chat_list[currentIndex];
 
   return (
-    <PageContainer onClick={handleClick}>
+    <PageContainer visible={pageVisible} onClick={handleClick}>
       <CustomHeader />
       <GameContainer>
         <SkipButton onClick={handleSkip}>SKIP ▶▶▶</SkipButton>
@@ -296,7 +312,7 @@ const IntroPage = () => {
               visible={dialogueVisible}
             />
             <ChatBox 
-              src={ChatKNT} 
+              src={currentDialogue.characterName === "KANATA" ? ChatKNT : ChatNYT} 
               alt="chat" 
               visible={dialogueVisible}
             />
@@ -304,9 +320,8 @@ const IntroPage = () => {
               fontSize={currentDialogue.fontSize}
               bold={currentDialogue.bold}
               visible={dialogueVisible}
-            >
-              {currentDialogue.dialogueText}
-            </DialogueText>
+              dangerouslySetInnerHTML={{ __html: currentDialogue.dialogueText }}
+            />
           </>
         )}
 
@@ -320,5 +335,4 @@ const IntroPage = () => {
     </PageContainer>
   );
 };
-
 export default IntroPage;
