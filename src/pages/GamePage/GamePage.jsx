@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import menuClick from "../../assets/audio/flashlight-clicking.mp3";
+import menuClick from "../../assets/audio/menu-click.mp3";
 import BG from "../../assets/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
-import { CLOTHING_TYPES, CHARACTERS, TYPE_TO_SLOT_MAP } from "../../constants";
+import { CLOTHING_TYPES, CHARACTERS } from "../../constants";
 import {
-  clearOutfit,
   setClothingItem,
+  clearOutfit,
   switchCharacter,
 } from "../../redux/outfitSlice";
 import { generateShareUrl } from "../../utils/shareToken";
 import ClothingGrid from "../../components/ClothingGrid";
 import Figure from "../../components/Figure";
-import CLOTHING_ITEMS from '../../constants/clothes'
+import CLOTHING_ITEMS from "../../constants/clothes";
 
 const PageContainer = styled.div`
   width: 1024px;
@@ -163,15 +163,15 @@ const GamePage = () => {
   const [showToast, setShowToast] = useState(false);
   const [isSecondStep, setIsSecondStep] = useState(false);
 
-  const outfitState = useSelector((state) => ({
+  const outfitState = useSelector(state => ({
     currentCharacter: state.outfit.currentCharacter,
     KNT: state.outfit.KNT,
-    NYT: state.outfit.NYT,
+    NYT: state.outfit.NYT
   }));
 
   useEffect(() => {
     dispatch(switchCharacter(CHARACTERS.KNT));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (showToast) {
@@ -237,15 +237,21 @@ const GamePage = () => {
   };
 
   const handleItemSelect = (item) => {
-    const slots = TYPE_TO_SLOT_MAP[item.type];
-    if (slots && slots.length > 0) {
-      new Audio(menuClick).play();
-      dispatch(
-        setClothingItem({
-          slot: slots[0],
-          itemId: item.id,
-        })
-      );
+    new Audio(menuClick).play();
+    const currentOutfit = outfitState[outfitState.currentCharacter];
+    
+    // If this item is already equipped in its slot, remove it
+    if (currentOutfit[item.slot] === item.id) {
+      dispatch(setClothingItem({ 
+        slot: item.slot, 
+        itemId: '0' // '0' represents empty slot
+      }));
+    } else {
+      // Otherwise, equip the item in its slot
+      dispatch(setClothingItem({ 
+        slot: item.slot, 
+        itemId: item.id 
+      }));
     }
   };
 
@@ -254,6 +260,11 @@ const GamePage = () => {
       item.type === currentCategory &&
       item.character === outfitState.currentCharacter
   );
+
+  const getEquippedItemId = (slot) => {
+    return outfitState[outfitState.currentCharacter][slot];
+  };
+
 
   return (
     <PageContainer>

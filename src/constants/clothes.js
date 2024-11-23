@@ -322,7 +322,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes01UI,
     mainImage: NYTShoes01,
-    position: { x: -9, y: 578, zIndex: 7 },
+    position: { x: -9, y: 578, zIndex: 2 },
   },
   {
     id: "NS002",
@@ -332,7 +332,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes02UI,
     mainImage: NYTShoes02,
-    position: { x: -9, y: 578, zIndex: 7 },
+    position: { x: -9, y: 578, zIndex: 2 },
   },
   {
     id: "NS003",
@@ -342,7 +342,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: NYTShoes03UI,
     mainImage: NYTShoes03,
-    position: { x: -2, y: 551, zIndex: 7 },
+    position: { x: -2, y: 551, zIndex: 2 },
   },
 
   // NYT Socks
@@ -354,7 +354,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "socks",
     uiImage: NYTSocks1UI,
     mainImage: NYTSocks1,
-    position: { x: 100, y: 450, zIndex: 6 },
+    position: { x: 100, y: 450, zIndex: 1 },
   },
   {
     id: "NSK002",
@@ -364,7 +364,7 @@ export const NYT_CLOTHING_ITEMS = [
     slot: "socks",
     uiImage: NYTSocks2UI,
     mainImage: NYTSocks2,
-    position: { x: 100, y: 450, zIndex: 6 },
+    position: { x: 100, y: 450, zIndex: 1 },
   },
 ];
 
@@ -374,6 +374,7 @@ export const KNT_CLOTHING_ITEMS = [
     id: "KB001",
     type: CLOTHING_TYPES.LOWERS,
     character: CHARACTERS.KNT,
+    slot: "lower",
     name: "Bottom 01",
     uiImage: KNTBottom01UI,
     mainImage: KNTBottom01,
@@ -384,6 +385,7 @@ export const KNT_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.LOWERS,
     character: CHARACTERS.KNT,
     name: "Bottom 02",
+    slot: "lower",
     uiImage: KNTBottom02UI,
     mainImage: KNTBottom02,
     position: { x: 61, y: 190, zIndex: 5 },
@@ -393,6 +395,7 @@ export const KNT_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.LOWERS,
     character: CHARACTERS.KNT,
     name: "Bottom 03",
+    slot: "lower",
     uiImage: KNTBottom03UI,
     mainImage: KNTBottom03,
     position: { x: 95, y: 250, zIndex: 5 },
@@ -506,12 +509,12 @@ export const KNT_CLOTHING_ITEMS = [
     type: CLOTHING_TYPES.TOPS,
     character: CHARACTERS.KNT,
     name: "Coat 01",
-    slot: "outerCoat",
+    slot: "middleCoat",
     uiImage: KNTCoat01UI,
     mainImage: KNTCoat01Top,
     baseImage: KNTCoat01Base,
-    position: { x: 40, y: 150, zIndex: 15 },
-    basePosition: { x: 42, y: 130, zIndex: -1 },
+    position: { x: 30, y: 180, zIndex: 15 },
+    basePosition: { x: 32, y: 160, zIndex: -1 },
   },
   {
     id: "KMCT001",
@@ -534,8 +537,8 @@ export const KNT_CLOTHING_ITEMS = [
     uiImage: KNTOutterCoat01UI,
     mainImage: KNTOutterCoat01Top,
     baseImage: KNTOutterCoat01Base,
-    position: { x: -20, y: 60, zIndex: 17 },
-    basePosition: { x: -20, y: 59, zIndex: -3 },
+    position: { x: -25, y: 60, zIndex: 17 },
+    basePosition: { x: -25, y: 59, zIndex: -3 },
   },
 
   // KNT Shoes
@@ -547,7 +550,7 @@ export const KNT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: KNTShoes01UI,
     mainImage: KNTShoes01,
-    position: { x: -9, y: 578, zIndex: 6 },
+    position: { x: -9, y: 578, zIndex: 2 },
   },
   {
     id: "KS002",
@@ -557,7 +560,7 @@ export const KNT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: KNTShoes02UI,
     mainImage: KNTShoes02,
-    position: { x: -2, y: 551, zIndex: 6 },
+    position: { x: -2, y: 551, zIndex: 2 },
   },
   {
     id: "KS003",
@@ -567,7 +570,7 @@ export const KNT_CLOTHING_ITEMS = [
     slot: "shoes",
     uiImage: KNTShoes03UI,
     mainImage: KNTShoes03,
-    position: { x: -5, y: 526, zIndex: 6 },
+    position: { x: -5, y: 526, zIndex: 2 },
   },
 ];
 
