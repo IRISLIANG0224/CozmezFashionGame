@@ -18,7 +18,7 @@ const PageContainer = styled.div`
   background-image: url(${BG});
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height:  720px;
 `;
 
 const GameContainer = styled.div`

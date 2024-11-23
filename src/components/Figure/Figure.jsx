@@ -1,52 +1,25 @@
-// src/components/Figure.js
-import React from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import KNT from "../../assets/img/Game/KNT/KNT.png";
+import NYT from "../../assets/img/Game/NYT/NYT.png";
 
-/**
- * Container for the character figure and clothing layers
- */
 const FigureContainer = styled.div`
-  position: relative;
-  width: 400px;
-  height: 600px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  position: absolute;
+  width: 380px;
+  height: 100%;
   overflow: hidden;
 `;
 
-/**
- * Base character figure/silhouette
- */
-const BaseFigure = styled.div`
+const CharacterImage = styled.img`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.05)
-  );
-  z-index: 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-  }
+  left: 50%;
+  top: 100px;
+  transform: translateX(-50%);
+  height: 600px;
+  object-fit: contain;
 `;
 
-/**
- * Container for clothing layers to ensure proper stacking
- */
 const ClothingContainer = styled.div`
   position: absolute;
   top: 0;
@@ -56,16 +29,42 @@ const ClothingContainer = styled.div`
   pointer-events: none;
 `;
 
-/**
- * Individual clothing item layer
- */
+
+
+const BaseFigure = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 800px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 400px;
+    left: 150px;
+    width: 100px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+  }
+`;
+
+
+
 const ClothingLayer = styled.img`
   position: absolute;
   pointer-events: none;
   transition: all 0.3s ease;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  z-index: ${props => props.zIndex};
+  left: ${(props) => props.x}px;
+  top: ${(props) => props.y}px;
+  z-index: ${(props) => props.zIndex};
   transform-origin: center;
   animation: appear 0.3s ease;
 
@@ -81,13 +80,10 @@ const ClothingLayer = styled.img`
   }
 `;
 
-/**
- * Character name display
- */
 const CharacterName = styled.div`
   position: absolute;
   top: 20px;
-  left: 50%;
+  left: 200px;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.5);
   color: white;
@@ -98,39 +94,33 @@ const CharacterName = styled.div`
   z-index: 1000;
 `;
 
-const Figure = ({ clothingItems, character }) => {
-  // Get the current outfit configuration from Redux
-  const outfit = useSelector(state => state.outfit[character]);
 
-  /**
-   * Renders all clothing layers in the correct order
-   * @returns {Array} Array of JSX elements representing clothing layers
-   */
+const Figure = ({ clothingItems, character }) => {
+  const outfit = useSelector((state) => state.outfit[character]);
+
   const renderClothingLayers = () => {
     const layers = [];
     const layerOrder = [
-      'inner',
-      'socks',
-      'lower',
-      'top',
-      'middleCoat',
-      'outerCoat',
-      'shoes',
-      'hat',
-      'chain1',
-      'chain2',
-      'choker'
+      "inner",
+      "socks",
+      "lower",
+      "top",
+      "middleCoat",
+      "outerCoat",
+      "shoes",
+      "hat",
+      "chain1",
+      "chain2",
+      "choker",
     ];
 
-    // Render layers in specific order
-    layerOrder.forEach(slot => {
+    layerOrder.forEach((slot) => {
       const itemId = outfit[slot];
-      if (itemId === '0') return; // Skip empty slots
+      if (itemId === "0") return;
 
-      const item = clothingItems.find(i => i.id === itemId);
-      if (!item) return; // Skip if item not found
+      const item = clothingItems.find((i) => i.id === itemId);
+      if (!item) return;
 
-      // Add base layer if exists
       if (item.baseImage) {
         layers.push(
           <ClothingLayer
@@ -144,7 +134,6 @@ const Figure = ({ clothingItems, character }) => {
         );
       }
 
-      // Add main clothing layer
       layers.push(
         <ClothingLayer
           key={item.id}
@@ -163,10 +152,9 @@ const Figure = ({ clothingItems, character }) => {
   return (
     <FigureContainer>
       <BaseFigure />
-      <CharacterName>{character}</CharacterName>
-      <ClothingContainer>
-        {renderClothingLayers()}
-      </ClothingContainer>
+      {/* <CharacterName>{character}</CharacterName> */}
+      <CharacterImage src={character === "KNT" ? KNT : NYT} alt={character} />
+      <ClothingContainer>{renderClothingLayers()}</ClothingContainer>
     </FigureContainer>
   );
 };
