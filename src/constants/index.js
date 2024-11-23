@@ -4,18 +4,18 @@
  * Define clothing categories
  */
 export const CLOTHING_TYPES = {
-  TOPS: 'tops',
-  LOWERS: 'lowers',
-  FOOTWEAR: 'footwear',
-  ACCESSORIES: 'accessories'
+  TOPS: "tops",
+  LOWERS: "lowers",
+  FOOTWEAR: "footwear",
+  ACCESSORIES: "accessories",
 };
 
 /**
  * Define available characters
  */
 export const CHARACTERS = {
-  KNT: 'KNT',
-  NYT: 'NYT'
+  KNT: "KNT",
+  NYT: "NYT",
 };
 
 /**
@@ -23,44 +23,44 @@ export const CHARACTERS = {
  * This defines which slots can hold which types of items
  */
 export const TYPE_TO_SLOT_MAP = {
-  tops: ['inner', 'top', 'middleCoat', 'outerCoat'],
-  lowers: ['lower'],
-  footwear: ['socks', 'shoes'],
-  accessories: ['hat', 'chain1', 'chain2', 'choker']
+  tops: ["inner", "top", "middleCoat", "outerCoat"],
+  lowers: ["lower"],
+  footwear: ["socks", "shoes"],
+  accessories: ["hat", "chain1", "chain2", "choker"],
 };
 
 /**
  * Define slots render order from bottom to top
  */
 export const SLOT_ORDER = [
-  'socks',
-  'inner',
-  'lower',
-  'top',
-  'middleCoat',
-  'outerCoat',
-  'shoes',
-  'chain1',
-  'chain2',
-  'choker',
-  'hat'
+  "socks",
+  "inner",
+  "lower",
+  "top",
+  "middleCoat",
+  "outerCoat",
+  "shoes",
+  "chain1",
+  "chain2",
+  "choker",
+  "hat",
 ];
 
 /**
  * Define initial outfit state
  */
 export const INITIAL_OUTFIT = {
-  hat: '0',
-  chain1: '0',
-  chain2: '0',
-  choker: '0',
-  inner: '0',
-  top: '0',
-  middleCoat: '0',
-  outerCoat: '0',
-  lower: '0',
-  socks: '0',
-  shoes: '0'
+  hat: "0",
+  chain1: "0",
+  chain2: "0",
+  choker: "0",
+  inner: "0",
+  top: "0",
+  middleCoat: "0",
+  outerCoat: "0",
+  lower: "0",
+  socks: "0",
+  shoes: "0",
 };
 
 /**
@@ -78,7 +78,7 @@ export const Z_INDEX = {
     chain1: 15,
     chain2: 16,
     choker: 17,
-    hat: 19
+    hat: 19,
   },
   MAIN: {
     socks: 2,
@@ -91,8 +91,8 @@ export const Z_INDEX = {
     chain1: 15,
     chain2: 16,
     choker: 18,
-    hat: 20
-  }
+    hat: 20,
+  },
 };
 
 /**
@@ -107,9 +107,9 @@ export const DEFAULT_POSITIONS = {
   top: { x: 100, y: 150 },
   middleCoat: { x: 100, y: 150 },
   outerCoat: { x: 100, y: 150 },
-  lower: { x: 100, y: 300 },
+  lower: { x: 20, y: 180 },
   socks: { x: 100, y: 450 },
-  shoes: { x: 100, y: 500 }
+  shoes: { x: -9, y: 578 },
 };
 
 /**
@@ -118,7 +118,7 @@ export const DEFAULT_POSITIONS = {
 export const GAME_STEPS = {
   KNT: 1,
   NYT: 2,
-  TOTAL: 2
+  TOTAL: 2,
 };
 
 // export default {
