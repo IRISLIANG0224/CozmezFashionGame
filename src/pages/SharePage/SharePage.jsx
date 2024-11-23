@@ -3,13 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import menuClick from "../../assets/audio/menu-click.mp3";
-import BG from "../../assets/img/Game/back.png";
 import CustomHeader from "../../components/CustomHeader";
-import { CLOTHING_TYPES, CHARACTERS } from "../../constants";
 import {
-  setClothingItem,
-  clearOutfit,
-  switchCharacter,
   setMood,
   loadOutfitFromToken,
 } from "../../redux/outfitSlice";
@@ -282,7 +277,7 @@ const SharePage = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
+    const token = urlParams.get("outfit");
 
 
     if (token) {
