@@ -95,7 +95,7 @@ const CharacterName = styled.div`
     z-index: 0;
 `;
 
-const Figure = ({ clothingItems, character }) => {
+const Figure = ({ clothingItems, character,hideName=false }) => {
   const outfit = useSelector((state) => state.outfit[character]);
 
   const renderClothingLayers = () => {
@@ -152,7 +152,7 @@ const Figure = ({ clothingItems, character }) => {
   return (
     <FigureContainer>
       <BaseFigure />
-      <CharacterName>{character === "KNT" ?'KANATA':'NAYUTA'}</CharacterName>
+      {!hideName&&<CharacterName>{character === "KNT" ?'KANATA':'NAYUTA'}</CharacterName>}
       <CharacterImage src={character === "KNT" ? KNT : NYT} alt={character} />
       <ClothingContainer>{renderClothingLayers()}</ClothingContainer>
     </FigureContainer>
